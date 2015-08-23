@@ -1,0 +1,83 @@
+<div class="col-md-12 bigtxt">
+	<div class="row">
+		<div class="col-md-4">
+			<span class="pull-left bigtxt glyphicon glyphicon-search" title="Search..."></span>
+			<input class="bigtxt pull-left" type="text" placeholder="Filter Data Here..." ng-model="filterData">
+		</div>
+		<div class="col-md-4">
+			<span class="glyphicon glyphicon-user"></span> Angular PHP MongoDB Example - minimal
+		</div>	
+		<div class="col-md-4">
+			<a class="pull-right btn btn-default glyphicon glyphicon-envelope" href="#/page/about"> About</a>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-6">
+			<ul class="pagination">	
+		  		<li ng-repeat="page in pagination track by $index">
+		  			<a ng-click="$parent.switchPage($index)" href=""> {{ $index + 1 }} </a>
+		  		</li>
+			</ul>  
+		</div>
+		<div class="col-md-6">
+			<button type="button" title="New Record" class="glyphicon glyphicon-plus btn btn-default bigtxt btn-lg pull-right" onclick="switchModal('modalNewUser','block')"></button>
+		</div>
+	</div>
+	<div class="table-responsive">       
+		<table class="table">
+			<thead>
+				<tr>
+					<th>ID</th>
+					<th>Name</th>
+					<th>Email</th>
+					<th>Address</th>
+					<th>Action</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr class="list" ng-repeat="info in informations | filter:filterData" orderBy: '_id'" ng-cloak>
+					<td>{{ info._id.$id }} </td>
+					<td>{{ info.name }} </td>
+					<td>{{ info.email }} </td>
+					<td>{{ info.address }} </td>
+					<td><a data-id={{info._id.$id}} data-target-id="modalNewUser" ng-click="$parent.dispatch($event)" class="icon glyphicon glyphicon-pencil" ></a> <a data-id={{info._id.$id}} ng-click="$parent.delete(info)" class="icon glyphicon glyphicon-trash"></a></td>
+			      </tr>
+			</tbody>
+		</table>
+	</div>
+	<!-- Modal -->
+	<div class="modal fade" id="modalNewUser">
+		<div class="modal-dialog">
+			<!-- Modal content-->
+			<div class="modal-content">
+				<div class="modal-body" style="padding:40px 50px;">
+					<form role="form" ng-model="formCall" name="myForm" ng-submit="submit()" >
+						<div class="form-group">
+							<input type="hidden" ng-model="_id" />
+							<label for="name">Name</label>
+							<span class="glyphicon glyphicon-question-sign" title="Your Name"></span>
+							<input type="text" class="form-control" id="name" ng-model="name" placeholder="Enter Name">
+						</div>
+						<div class="form-group">
+							<label for="email">Email</label>
+							<span class="glyphicon glyphicon-question-sign" title="Your Email"></span>
+							<input type="text" class="form-control" id="email" ng-model="email" placeholder="Enter Email">
+						</div>
+						<div class="form-group">
+							<label for="address">Address</label>
+							<span class="glyphicon glyphicon-question-sign" title="Your Address"></span>
+							<input type="text" class="form-control" id="address" ng-model="address" placeholder="Enter Adress">
+						</div>
+						<button type="submit" class="btn btn-success bt-c"><span class="glyphicon glyphicon-ok"></span> Save</button><button type="button" class="btn btn-default pull-right bt-c" onclick="switchModal('modalNewUser','none')"><span class="glyphicon glyphicon-remove"></span> Cancel</button>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="modal fade notifications" id="notification">
+		<div class="modal-dialog">
+			<div class="modal-body"><span class="content">&nbsp;</span><button type="button" class="close" onclick="switchModal('notification','none')">&times;</button>
+			</div>
+		</div>
+	</div>
+</div>
